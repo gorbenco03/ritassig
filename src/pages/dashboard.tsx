@@ -62,7 +62,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchInsurances = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/insurances');
+        const response = await fetch('http://142.93.191.206:5000/api/insurances');
         const data = await response.json();
 
         setRecentActivities(data);
@@ -109,7 +109,7 @@ const Dashboard: React.FC = () => {
   const handleApprove = async (_id: string) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/insurances/${_id}/status`,
+        `http://142.93.191.206:5000/api/insurances/${_id}/status`,
         {
           method: 'PATCH',
           headers: {
@@ -140,7 +140,7 @@ const Dashboard: React.FC = () => {
   const handleReject = async (_id: string) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/insurances/${_id}/status`,
+        `http://142.93.191.206:5000/api/insurances/${_id}/status`,
         {
           method: 'PATCH',
           headers: {
@@ -171,7 +171,7 @@ const Dashboard: React.FC = () => {
   const handleGenerateInvoice = async (_id: string) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/insurances/${_id}/generate-invoice`,
+        `http://142.93.191.206:5000/api/insurances/${_id}/generate-invoice`,
         {
           method: 'POST',
           headers: {
@@ -194,7 +194,7 @@ const Dashboard: React.FC = () => {
 
   const handleDownloadPDF = (_id: string) => {
     const link = document.createElement('a');
-    link.href = `http://localhost:5000/api/insurances/${_id}/download-pdf`;
+    link.href = `http://142.93.191.206:5000/api/insurances/${_id}/download-pdf`;
     link.target = '_blank';
     link.download = `Insurance_${_id}.pdf`;
     link.click();
