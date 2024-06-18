@@ -113,7 +113,7 @@ const Details: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://142.93.191.206:5000/api/insurance', {
+      const response = await fetch('https://142.93.191.206:5000/api/insurance', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestData),
@@ -168,7 +168,7 @@ const Details: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://142.93.191.206:5000/api/calculate-price', {
+      const response = await fetch('https://ritasig.ddnsking.com/api/calculate-price', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
