@@ -200,6 +200,14 @@ const Dashboard: React.FC = () => {
     link.click();
   };
 
+  const handleDownloadInvoice = (_id: string) => {
+    const link = document.createElement('a');
+    link.href = `https://ritasig.ddnsking.com/api/insurances/${_id}/download-invoice`;
+    link.target = '_blank';
+    link.download = `Invoice_${_id}.pdf`;
+    link.click();
+  };
+
   return (
     <>
       <div className="min-h-full">
@@ -727,6 +735,16 @@ const Dashboard: React.FC = () => {
                                           </button>
                                           <button
                                             onClick={() =>
+                                              handleDownloadInvoice(
+                                                activity._id,
+                                              )
+                                            }
+                                            className="inline-flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                                          >
+                                            Descarcă Factura
+                                          </button>
+                                          <button
+                                            onClick={() =>
                                               handleDownloadPDF(activity._id)
                                             }
                                             className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -753,5 +771,6 @@ const Dashboard: React.FC = () => {
       </div>
     </>
   );
-}
-  export default Dashboard;
+};
+
+export default Dashboard;

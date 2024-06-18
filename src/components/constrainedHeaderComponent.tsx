@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Bars3Icon} from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router-dom'
+import { Bars3Icon } from '@heroicons/react/24/outline'
 
 const navigation = [
   { name: 'ACASA', href: '#' },
@@ -9,6 +10,11 @@ const navigation = [
 
 export default function ConstrainedHeaderComponent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const navigate = useNavigate()
+
+  const handleAdminLogin = () => {
+    navigate('/loginPage')
+  }
 
   return (
     <header className="bg-white">
@@ -37,12 +43,11 @@ export default function ConstrainedHeaderComponent() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log out <span aria-hidden="true">&rarr;</span>
-          </a>
+          <button onClick={handleAdminLogin} className="text-sm font-semibold leading-6 text-gray-900">
+            Log in as admin <span aria-hidden="true">&rarr;</span>
+          </button>
         </div>
       </nav>
-     
     </header>
   )
 }
