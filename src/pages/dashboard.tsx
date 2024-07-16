@@ -45,7 +45,7 @@ interface Insurance {
 
 const navigation = [
   { name: 'Home', href: '#', icon: HomeIcon, current: true },
-  { name: 'Reports', href: '#', icon: DocumentChartBarIcon, current: false },
+  { name: 'Reports', href: '/reports', icon: DocumentChartBarIcon, current: false },
 ];
 
 const secondaryNavigation = [{ name: 'Settings', href: '#', icon: CogIcon }];
