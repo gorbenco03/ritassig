@@ -59,16 +59,60 @@ const Dashboard: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [totalSum, setTotalSum] = useState(0);
 
+  const [filterStartDate, setFilterStartDate] = useState<Date | null>(null);
+  const [filterEndDate, setFilterEndDate] = useState<Date | null>(null);
+  const [filterStatus, setFilterStatus] = useState<string | null>(null);
+  const [filterPrice, setFilterPrice] = useState<number | null>(null);
+  const [filterType, setFilterType] = useState<string | null>(null);
+
+  const [tempFilterStartDate, setTempFilterStartDate] = useState<Date | null>(null);
+  const [tempFilterEndDate, setTempFilterEndDate] = useState<Date | null>(null);
+  const [tempFilterStatus, setTempFilterStatus] = useState<string | null>(null);
+  const [tempFilterPrice, setTempFilterPrice] = useState<number | null>(null);
+  const [tempFilterType, setTempFilterType] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchInsurances = async () => {
       try {
         const response = await fetch('https://ritasig.ddnsking.com/api/insurances');
         const data = await response.json();
 
-        setRecentActivities(data);
-        const totalSum = data.reduce(
+        let filteredData = data;
+
+        if (filterStartDate) {
+          filteredData = filteredData.filter((insurance: Insurance) =>
+            new Date(insurance.DataInceput) >= filterStartDate
+          );
+        }
+
+        if (filterEndDate) {
+          filteredData = filteredData.filter((insurance: Insurance) =>
+            new Date(insurance.DataSfarsit) <= filterEndDate
+          );
+        }
+
+        if (filterStatus) {
+          filteredData = filteredData.filter(
+            (insurance: Insurance) => insurance.StatusAsigurare === filterStatus
+          );
+        }
+
+        if (filterPrice !== null) {
+          filteredData = filteredData.filter(
+            (insurance: Insurance) => insurance.PretAsigurare <= filterPrice
+          );
+        }
+
+        if (filterType) {
+          filteredData = filteredData.filter(
+            (insurance: Insurance) => insurance.TipAsigurare === filterType
+          );
+        }
+
+        setRecentActivities(filteredData);
+        const totalSum = filteredData.reduce(
           (acc: any, curr: { PretAsigurare: any }) => acc + curr.PretAsigurare,
-          0,
+          0
         );
         setTotalSum(totalSum);
       } catch (error) {
@@ -77,7 +121,29 @@ const Dashboard: React.FC = () => {
     };
 
     fetchInsurances();
-  }, []);
+  }, [filterStartDate, filterEndDate, filterStatus, filterPrice, filterType]);
+
+  const applyFilters = () => {
+    setFilterStartDate(tempFilterStartDate);
+    setFilterEndDate(tempFilterEndDate);
+    setFilterStatus(tempFilterStatus);
+    setFilterPrice(tempFilterPrice);
+    setFilterType(tempFilterType);
+  };
+
+  const resetFilters = () => {
+    setTempFilterStartDate(null);
+    setTempFilterEndDate(null);
+    setTempFilterStatus(null);
+    setTempFilterPrice(null);
+    setTempFilterType(null);
+
+    setFilterStartDate(null);
+    setFilterEndDate(null);
+    setFilterStatus(null);
+    setFilterPrice(null);
+    setFilterType(null);
+  };
 
   const pendingInsurancesCount = recentActivities.filter(
     (activity) =>
@@ -378,51 +444,78 @@ const Dashboard: React.FC = () => {
           <main className="flex-1 pb-8">
             <div className="mt-8">
               <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                <h2 className="text-lg font-medium leading-6 text-gray-900">
-                  Overview
-                </h2>
-                <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {cards.map((card) => (
-                    <div
-                      key={card.name}
-                      className="overflow-hidden rounded-lg bg-white shadow"
+                <h2 className="text-2xl font-semibold leading-6 text-gray-900 mb-4">Filtre</h2>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 bg-white p-6 rounded-lg shadow-md">
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Data de început</label>
+                    <input
+                      type="date"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm"
+                      onChange={(e) => setTempFilterStartDate(new Date(e.target.value))}
+                      value={tempFilterStartDate ? tempFilterStartDate.toISOString().substr(0, 10) : ''}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Data de sfârșit</label>
+                    <input
+                      type="date"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm"
+                      onChange={(e) => setTempFilterEndDate(new Date(e.target.value))}
+                      value={tempFilterEndDate ? tempFilterEndDate.toISOString().substr(0, 10) : ''}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Status</label>
+                    <select
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm"
+                      onChange={(e) => setTempFilterStatus(e.target.value)}
+                      value={tempFilterStatus || ''}
                     >
-                      <div className="p-5">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0">
-                            <card.icon
-                              className="h-6 w-6 text-gray-400"
-                              aria-hidden="true"
-                            />
-                          </div>
-                          <div className="ml-5 w-0 flex-1">
-                            <dl>
-                              <dt className="truncate text-sm font-medium text-gray-500">
-                                {card.name}
-                              </dt>
-                              <dd>
-                                <div className="text-lg font-medium text-gray-900">
-                                  {card.amount}
-                                </div>
-                              </dd>
-                            </dl>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="bg-gray-50 px-5 py-3">
-                        <div className="text-sm">
-                          <a
-                            href={card.href}
-                            className="font-medium text-cyan-700 hover:text-cyan-900"
-                          >
-                            View all
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                      <option value="">Toate</option>
+                      <option value="Acceptat">Acceptat</option>
+                      <option value="Respins">Respins</option>
+                    </select>
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Preț ()</label>
+                    <input
+                      type="number"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm"
+                      onChange={(e) => setTempFilterPrice(parseFloat(e.target.value))}
+                      value={tempFilterPrice !== null ? tempFilterPrice : ''}
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Tipul asigurării</label>
+                    <select
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-cyan-500 focus:ring-cyan-500 sm:text-sm"
+                      onChange={(e) => setTempFilterType(e.target.value)}
+                      value={tempFilterType || ''}
+                    >
+                      <option value="">Toate</option>
+                      <option value="RCA">RCA</option>
+                      <option value="CASCO">CASCO</option>
+                      <option value="CARTE VERDE">CARTE VERDE</option>
+                      {/* Adaugă alte tipuri de asigurări după cum este necesar */}
+                    </select>
+                  </div>
+                  <div className="col-span-1 sm:col-span-2 lg:col-span-3 flex justify-end space-x-3">
+                    <button
+                      onClick={applyFilters}
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                      Aplică filtrele
+                    </button>
+                    <button
+                      onClick={resetFilters}
+                      className="inline-flex justify-center rounded-md border border-transparent bg-gray-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                    >
+                      Resetează filtrele
+                    </button>
+                  </div>
                 </div>
               </div>
+
               <h2 className="mx-auto mt-8 max-w-6xl px-4 text-lg font-medium leading-6 text-gray-900 sm:px-6 lg:px-8">
                 Recent activity
               </h2>
