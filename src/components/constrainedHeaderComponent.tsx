@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { Bars3Icon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'ACASA', href: '#' },
-  { name: 'DESPRE NOI', href: '#' },
+  { name: 'ACASA', href: '/' },
+  { name: 'PERSOANE FIZICE', href: '/persFiz' },
   { name: 'CONTACT', href: '#' },
 ]
 
