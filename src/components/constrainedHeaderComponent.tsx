@@ -4,7 +4,7 @@ import { Bars3Icon } from '@heroicons/react/24/outline'
 
 const navigation = [
   { name: 'ACASA', href: '/' },
-  { name: 'PERSOANE FIZICE', href: '/persFiz' },
+  { name: 'DESPRE ASIGURARI', href: '/persFiz' },
   { name: 'CONTACT', href: '#' },
 ]
 
