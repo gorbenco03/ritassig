@@ -4,8 +4,10 @@ import { Bars3Icon } from '@heroicons/react/24/outline'
 
 const navigation = [
   { name: 'ACASA', href: '/' },
+  { name: 'SOLICITA ASIGURARE', href: '/insurance'}, 
   { name: 'DESPRE ASIGURARI', href: '/persFiz' },
   { name: 'CONTACT', href: '#' },
+ 
 ]
 
 export default function ConstrainedHeaderComponent() {

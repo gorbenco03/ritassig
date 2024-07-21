@@ -5,12 +5,14 @@ import MainPage from './pages/mainPage';
 import Dashboard from './pages/dashboard';
 import Reports from './pages/reports';
 import InsuranceInfoPage from './pages/persFiz';
+import StartPage from './pages/startPage';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/" element={<StartPage />} />
+        <Route path="/insurance" element={<MainPage/>} />
         <Route path="/loginPage" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/reports" element={<Reports/>} />
