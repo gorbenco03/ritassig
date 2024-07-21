@@ -12,7 +12,7 @@ const StartPage: React.FC = () => {
           <div className="container mx-auto text-center">
             <h1 className="text-4xl font-bold text-gray-800">Bun venit la Ritasig!</h1>
             <p className="mt-4 text-gray-600">
-              Noi ne ocupăm de asigurări auto precum RCA, CASCO sau Cartea Verde.
+              Noi ne ocupăm de asigurări auto precum RCA, CASCO.  sau Cartea Verde.
             </p>
             <div className="mt-8">
               <a href="/insurance" className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg shadow-lg hover:bg-blue-700 transition duration-300">
@@ -22,7 +22,7 @@ const StartPage: React.FC = () => {
           </div>
         </section>
 
-        <section className="bg-gray-200 py-12">
+        <section className="bg-gray-100 py-12">
           <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <h2 className="text-2xl font-semibold text-gray-800">Asigurări RCA</h2>

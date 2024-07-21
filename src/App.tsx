@@ -6,6 +6,7 @@ import Dashboard from './pages/dashboard';
 import Reports from './pages/reports';
 import InsuranceInfoPage from './pages/persFiz';
 import StartPage from './pages/startPage';
+import Contact from './pages/contact';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/reports" element={<Reports/>} />
         <Route path="/persFiz" element={<InsuranceInfoPage/>} />
+        <Route path='/contact' element={<Contact></Contact>}> </Route>
+        
       </Routes>
     </Router>
   );

@@ -6,7 +6,7 @@ const navigation = [
   { name: 'ACASA', href: '/' },
   { name: 'SOLICITA ASIGURARE', href: '/insurance'}, 
   { name: 'DESPRE ASIGURARI', href: '/persFiz' },
-  { name: 'CONTACT', href: '#' },
+  { name: 'CONTACT', href: '/contact' },
  
 ]
 
